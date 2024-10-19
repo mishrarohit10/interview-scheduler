@@ -4,6 +4,7 @@ import twilio from 'twilio';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
@@ -43,8 +44,16 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ message: 'Invalid password.' });
         }
 
+        // Check if email is verified
+        if (!user.emailVerified) {
+            return res.status(403).json({ message: 'Please verify your email first.' });
+        }
+
+        // Generate JWT
+        const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
         // Optionally, return user data or a token here
-        res.status(200).json({ message: 'Login successful!', user: { email: user.email, mobile: user.mobile } });
+        res.status(200).json({ message: 'Login successful!', token, user: { email: user.email, mobile: user.mobile } });
     } catch (error) {
         console.error('Error logging in user:', error);
         res.status(500).json({ message: 'Error logging in user.' });
