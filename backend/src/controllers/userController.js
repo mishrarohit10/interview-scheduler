@@ -161,7 +161,7 @@ export const getEmail = async (req, res) => {
             from: process.env.EMAIL_USER,
             to: companyEmail,
             subject: 'Email Verification',
-            html: `<p>Click <a href="http://localhost:5173/verify-email/${verificationToken}">here</a> to verify your email.</p>`,
+            html: `<p>Click <a href="https://interview-scheduler-nine.vercel.app/verify-email/${verificationToken}">here</a> to verify your email.</p>`,
         };
 
         // Send the email
