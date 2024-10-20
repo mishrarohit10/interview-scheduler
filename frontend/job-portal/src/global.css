@@ -1,0 +1,503 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+
+body,
+h2 {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  font-size: 1.5em;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.right-section {
+  display: flex; /* Makes the contact button and profile section align horizontally */
+  align-items: center; /* Vertically center both items */
+}
+
+.contact-button {
+  margin-right: 20px; /* Add some space between the contact button and profile */
+  margin-bottom: 13px;
+  color: black;
+  background: white;
+}
+
+.contact-button:hover {
+  color: black; /* Same as the default color */
+  background: white; /* Same as the default background */
+  cursor: default; /* Optionally, disable the pointer cursor */
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  margin-right: 5px;
+}
+
+.dropdown-icon {
+  font-size: 1em;
+}
+
+/* verify form */
+
+/* Ensure the main container uses flexbox */
+.verify-container {
+  display: flex; /* Use flexbox for layout */
+  height: 80vh; /* Set height to view height */
+}
+
+.signup-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Style for left side */
+.left-side {
+  flex: 1; /* Takes half of the space */
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center; /* Center content vertically */
+  text-align: center; /* Center text */
+}
+
+/* Style for right side */
+.right-side {
+  flex: 1; /* Takes half of the space */
+  background-color: #ffffff; /* White background */
+  padding: 20px;
+  display: flex;
+  justify-content: center; /* Center form horizontally */
+  align-items: center; /* Center form vertically */
+}
+
+/* Form styling */
+.signup-form {
+  width: 100%; /* Full width */
+  max-width: 400px; /* Limit max width */
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px;
+  border: 1px solid #2996f4;
+}
+
+/* Additional styling */
+.form-group {
+  position: relative; /* For icon positioning */
+  margin-bottom: 15px; /* Space between form fields */
+}
+
+.form-group input {
+  width: 100%; /* Full width */
+  padding: 10px 30px 10px 40px; /* Padding for input */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+}
+
+.icon {
+  position: absolute; /* Positioning of icons */
+  left: 10px; /* Left alignment */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust vertical alignment */
+  width: 20px; /* Icon width */
+  height: 20px; /* Icon height */
+}
+
+.proceed-button {
+  background-color: #007bff; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for button */
+  cursor: pointer; /* Pointer on hover */
+  width: 100%;
+}
+
+.proceed-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.status-icon {
+  position: absolute; /* Absolute positioning */
+  right: 10px; /* Positioning from the right */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust vertical alignment */
+  font-size: 18px; /* Adjust size as needed */
+}
+
+.green-tick {
+  color: green; /* Green color for success */
+}
+
+.red-cross {
+  color: red; /* Red color for error */
+}
+
+/* createjob */
+
+.create-job-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: flex-start; /* Align items to the left */
+}
+
+.create-job-form {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+}
+
+.form-group {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin-bottom: 15px; /* Space between form groups */
+}
+
+.form-group label {
+  flex: 0 0 200px; /* Fixed width for labels */
+  margin-right: 10px; /* Space between label and input */
+}
+
+.form-group input,
+.form-group textarea {
+  flex: 1; /* Take up remaining space */
+  padding: 10px; /* Padding inside the input */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+}
+
+button {
+  background-color: #007bff; /* Button background */
+  color: white; /* Button text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for button */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* login */
+/* Container for the login form */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh; /* Full height for centering */
+  background-color: #f7f9fc; /* Light background */
+}
+
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  background-color: white; /* White background for the form */
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: center; /* Center the text */
+}
+
+.login-form h2 {
+  margin-bottom: 20px;
+  color: #007bff; /* Blue heading */
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input {
+  width: 100%; /* Full width of the form */
+  padding: 10px;
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px; /* Rounded input fields */
+  box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+.proceed-button {
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for the button */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px;
+}
+
+.proceed-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Sidebar CSS */
+.sidebar {
+  width: 80px; /* Narrow width */
+  height: calc(
+    100vh - 1.5rem
+  ); /* Full height minus navbar height (adjust if your navbar height differs) */
+  position: fixed; /* Stays fixed on the left */
+  top: 100px; /* Start below the navbar (adjust based on your navbar's height) */
+  left: 0;
+  background-color: #ffffff; /* white background color */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px; /* Padding at the top */
+  border-right: 1px solid #ddd;
+}
+
+.sidebar-logo img {
+  width: 40px; /* Adjust size of the home icon */
+  height: 40px;
+  margin-bottom: 20px; /* Add space below the icon */
+}
+
+.sidebar-logo img:hover {
+  cursor: pointer; /* Pointer on hover */
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  transition: transform 0.2s ease; /* Smooth hover effect */
+}
+
+/* Dashboard content */
+.content {
+  margin-left: 80px; /* This matches the width of the sidebar */
+  padding: 20px; /* Add padding for inner spacing */
+  margin-left: 100px;
+}
+
+h1 {
+  text-align: center;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* this works */
+/* General form styling */
+.create-job-form {
+  width: 50rem;
+  margin-left: 5rem;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.create-job-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.signup-form h2 {
+  padding-left: 160px;
+}
+
+/* Input fields */
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+  color: #535353b2;
+  padding-left: 50px;
+}
+
+/* Ensure the select dropdown matches the input field style */
+.form-group select {
+  appearance: none; /* Removes the default arrow to allow custom styling */
+  background-color: #fff;
+  cursor: pointer;
+  color: #535353b2;
+}
+
+.create-job-form .form-group {
+  margin-bottom: 1rem; /* Space between form groups */
+}
+
+.create-job-form textarea {
+  width: 100%; /* Full width of the container */
+  height: 150px; /* Adjust height as needed */
+  border-radius: 5px; /* Match other input styles */
+  border: 1px solid #ccc; /* Border color */
+  padding: 10px; /* Padding inside the textarea */
+  resize: vertical; /* Allow vertical resizing */
+}
+
+/* Add a custom dropdown arrow if needed */
+.form-group select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* Styling for buttons */
+.create-job-form button {
+  width: 7rem;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 43rem;
+}
+
+.create-job-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Custom dropdown arrow only for experience level */
+.experience-select {
+  width: 100%;
+  padding: 10px;
+  padding-right: 30px; /* Extra padding for the dropdown arrow */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: #fff;
+  appearance: none; /* Remove default dropdown arrow */
+  background-image: url("./assets/gray-arrow.svg"); /* Custom arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Position the arrow */
+  cursor: pointer; /* Show pointer cursor */
+}
+
+/* Add focus effect */
+.experience-select:focus {
+  outline: none;
+  border-color: #007bff; /* Change border color on focus */
+}
+
+/* tag candidate */
+.tags-input {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 5px;
+}
+
+.tag {
+  background-color: white; /* Blue background */
+  color: #535353b2; /* White text */
+  border-radius: 20px; /* Circular shape */
+  padding: 5px 10px; /* Padding */
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+}
+
+.remove-tag {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+input {
+  border: none;
+  outline: none;
+  flex: 1; /* Take remaining space */
+  padding: 5px;
+}
+
+.verify-form {
+  border: 1px solid #007bff;
+  border-radius: 12px;
+  width: 30rem;
+}
+
+.verify-form h2 {
+  margin-left: 164px;
+}
+
+.verify-form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.verify-form-group input {
+  padding: 10px 30px 10px 40px; /* Padding for input */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+  width: 350px;
+  margin-left: 30px;
+}
+
+.verify-form-group button {
+  width: 420px;
+  margin-left: 30px;
+  margin-bottom: 26px;
+}
+
+.verify-icon {
+  position: absolute; /* Positioning of icons */
+  left: 40px;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  transform: translateY(-50%);
+  width: 20px; /* Icon width */
+  height: 20px; /* Icon height */
+}
+
+input {
+  background-color: #f4f4f4;
+}
+
+input::placeholder {
+  color: #535353; /* Set your desired color here */
+  opacity: 1; /* Ensure full opacity for the color (default is sometimes lower) */
+}
+
+input:focus::placeholder {
+  color: lightgray; /* Optionally, change the color when the input is focused */
+}
