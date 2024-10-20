@@ -1,9 +1,7 @@
-// src/api.js
 import axios from 'axios';
 
-// Create an Axios instance
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: 'https://interview-scheduler-0s3o.onrender.com/api',
     headers: {
         'Content-Type': 'application/json',
     },

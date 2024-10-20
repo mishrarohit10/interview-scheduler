@@ -14,6 +14,7 @@ const App = () => {
         <Router>
             <NavBar/>
             <Routes>
+            <Route path="/" element={<Navigate to="/signup" />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/verify-email/:token" element={<VerifyEmail />} />
