@@ -4,6 +4,6 @@ import { authenticateJWT } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.post('/create-job', authenticateJWT, createJob);
+router.post('/create-job', createJob);
 
 export default router;

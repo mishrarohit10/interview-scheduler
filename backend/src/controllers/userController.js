@@ -14,19 +14,10 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 console.log('accountSid:', accountSid);
 console.log('authToken:', authToken);
 
-const twilioClient = twilio(accountSid, authToken);
+// const twilioClient = twilio(accountSid, authToken);
 const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 
 console.log('twilioPhoneNumber:', twilioPhoneNumber);
-
-// Nodemailer configuration
-const transporter = nodemailer.createTransport({
-    service: 'Gmail', // Use your email provider
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
-});
 
 export const loginUser = async (req, res) => {
     const { email, password } = req.body;
@@ -52,7 +43,6 @@ export const loginUser = async (req, res) => {
         // Generate JWT
         const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Optionally, return user data or a token here
         res.status(200).json({ message: 'Login successful!', token, user: { email: user.email, mobile: user.mobile } });
     } catch (error) {
         console.error('Error logging in user:', error);
@@ -62,105 +52,126 @@ export const loginUser = async (req, res) => {
 
 // User Registration
 export const registerUser = async (req, res) => {
-    const { email, mobile, password } = req.body;
+    const { name, phoneNumber, companyName, companyEmail, employeeSize } = req.body;
 
     try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const emailToken = crypto.randomBytes(32).toString('hex'); // Generate token for email verification
-        const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit OTP
-        const otpExpiry = Date.now() + 3600000; // OTP valid for 1 hour
+        // Validate input
+        if (!name || !phoneNumber || !companyName || !companyEmail || !employeeSize) {
+            return res.status(400).json({ message: 'All fields are required.', error: true });
+        }
 
+        // Check for valid email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(companyEmail)) {
+            return res.status(400).json({ message: 'Invalid email format.', error: true });
+        }
+
+        // Check if the email already exists
+        const existingUser = await User.findOne({ companyEmail });
+        if (existingUser) {
+            return res.status(200).json({ message: 'Email already exists. Details were not saved.', error: false });
+        }
+
+        // Create new user if email does not exist
         const user = new User({
-            email,
-            mobile,
-            password: hashedPassword,
-            emailToken,
-            otp,
-            otpExpiry
+            name,
+            phoneNumber,
+            companyName,
+            companyEmail,
+            employeeSize,
         });
         await user.save();
 
-        // Send Email Verification
-        try {
-            const mailOptions = {
-                from: process.env.EMAIL_USER,
-                to: email,
-                subject: 'Verify Your Email',
-                html: `<p>Click <a href="http://localhost:5000/api/users/verify-email/${emailToken}">here</a> to verify your email.</p>`,
-            };
-            await transporter.sendMail(mailOptions);
-        } catch (emailError) {
-            console.error('Error sending verification email:', emailError);
-            // Optionally, you can delete the user if email sending fails
-            await User.findByIdAndDelete(user._id);
-            return res.status(500).json({ message: 'Error sending verification email. Please try again.' });
-        }
-
-        // Send OTP via SMS
-        // try {
-        //     await twilioClient.messages.create({
-        //         body: `Your OTP is: ${otp}`,
-        //         from: twilioPhoneNumber,
-        //         to: mobile,
-        //     });
-        // } catch (smsError) {
-        //     console.error('Error sending OTP via SMS:', smsError);
-        //     // Optionally, you can delete the user if SMS sending fails
-        //     await User.findByIdAndDelete(user._id);
-        //     return res.status(500).json({ message: 'Error sending OTP via SMS. Please try again.' });
-        // }
-
-        res.status(201).json({ message: 'User registered successfully! Check your email and SMS for verification.' });
+        res.status(201).json({ message: 'Details saved successfully', error: false });
     } catch (error) {
         console.error('Error registering user:', error);
-        res.status(500).json({ message: 'Error registering user.' });
+        res.status(500).json({ message: 'Error registering user.', error: true });
     }
 };
+
 
 // Email Verification
 export const verifyEmail = async (req, res) => {
     const { token } = req.params;
+    console.log(token, 'token');
 
     try {
+        // Find the user by the verification token
         const user = await User.findOne({ emailToken: token });
+
+        console.log(user)
+
         if (!user) {
-            return res.status(404).json({ message: 'Invalid token.' });
+            return res.status(404).json({ message: 'Invalid token.', error: true  });
         }
 
-        user.emailVerified = true;
-        user.emailToken = undefined; // Clear the token after verification
+        // Check if the token has expired
+        if (Date.now() > user.verificationTokenExpiry) {
+            return res.status(400).json({ message: 'Token has expired.', error: true });
+        }
+
+        // Verify the email
+        user.emailVerified = false;
+        user.verificationToken = undefined; 
+        user.verificationTokenExpiry = undefined; 
         await user.save();
 
-        res.status(200).json({ message: 'Email verified successfully!' });
+        res.status(200).json({ message: 'Email verified successfully!', companyName: user.companyName,error: false });
     } catch (error) {
         console.error('Error verifying email:', error);
         res.status(500).json({ message: 'Error verifying email.' });
     }
 };
 
-// Phone Verification
-export const verifySMS = async (req, res) => {
-    const { mobile, otp } = req.body;
+export const getEmail = async (req, res) => {
+    const { companyEmail } = req.body; 
+
+    // Generate a random verification token
+    const verificationToken = crypto.randomBytes(32).toString('hex');
+    console.log('Verification Token:', verificationToken);
+
+    const tokenExpiry = Date.now() + 3600000; // Set token expiry to 1 hour from now
 
     try {
-        const user = await User.findOne({ mobile });
+        // Check if the email exists in the database
+        const user = await User.findOne({ companyEmail });
+
         if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
+            return res.status(404).json({ message: 'User not found.', error: false });
         }
 
-        // Check if OTP is valid and not expired
-        if (user.otp === otp && Date.now() < user.otpExpiry) {
-            user.mobileVerified = true;
-            user.otp = undefined; // Clear the OTP after verification
-            user.otpExpiry = undefined; // Clear expiry
-            await user.save();
+        user.emailToken = verificationToken;
+        user.emailTokenExpiry = tokenExpiry;
 
-            res.status(200).json({ message: 'Mobile number verified successfully!' });
-        } else {
-            res.status(400).json({ message: 'Invalid or expired OTP.' });
-        }
+        console.log('User:', user.emailToken);
+
+        await user.save();
+
+        // Create a Nodemailer transporter
+        const transporter = nodemailer.createTransport({
+            service: 'gmail', 
+            auth: {
+                user: process.env.EMAIL_USER, 
+                pass: process.env.EMAIL_PASS, 
+            },
+        });
+
+        // Email options
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: companyEmail,
+            subject: 'Email Verification',
+            html: `<p>Click <a href="http://localhost:5173/verify-email/${verificationToken}">here</a> to verify your email.</p>`,
+        };
+
+        // Send the email
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({ message: 'Verification email sent.', error: false });
     } catch (error) {
-        console.error('Error verifying mobile number:', error);
-        res.status(500).json({ message: 'Error verifying mobile number.' });
+        console.error('Error sending verification email:', error);
+        res.status(500).json({ message: 'Error sending verification email.' });
     }
 };
+
+

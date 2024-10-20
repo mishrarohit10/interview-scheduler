@@ -1,19 +1,27 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        // unique: true,
-    },
-    password: {
+    name: {
         type: String,
         required: true,
     },
-    mobile: {
+    phoneNumber: {
         type: String,
         required: true,
-        // unique: true,
+        unique: false,
+    },
+    companyName: {
+        type: String,
+        required: true,
+    },
+    employeeSize: {
+        type: String,
+        required: true,
+    },
+    companyEmail: {
+        type: String,
+        required: true,
+        unique: false, 
     },
     emailVerified: {
         type: Boolean,
@@ -23,11 +31,15 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    emailToken: String,  
-    otp: String,  
-    otpExpiry: Date, 
+    emailToken: {
+        type: String,
+        default: null,
+    },
+    emailTokenExpiry: {
+        type: Date,  
+        default: null,
+    },
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 export default User;
-
