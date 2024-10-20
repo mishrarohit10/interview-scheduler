@@ -8,7 +8,15 @@ import jobRoutes from './routes/jobRoutes.js';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+    origin: 'https://interview-scheduler-nine.vercel.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, 
+    optionsSuccessStatus: 204 
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
