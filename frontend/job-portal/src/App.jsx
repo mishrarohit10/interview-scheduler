@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Signup from './components/Auth/Signup';
 import Login from './components/Auth/Login';
 import VerifyEmail from './components/Auth/VerifyEmail';
@@ -14,8 +14,7 @@ const App = () => {
         <Router>
             <NavBar />
             <Routes>
-                <Route path="/" element={<Navigate to="/signup" />} /> 
-                <Route path="/signup" element={<Signup />} />
+                <Route path="/" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/verify-email/:token" element={<VerifyEmail />} />
                 <Route path="/verify-sms" element={<VerifySMS />} />
