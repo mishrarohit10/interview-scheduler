@@ -8,7 +8,7 @@ const VerifyEmail = () => {
     useEffect(() => {
         const verifyEmail = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/users/verify-email/${token}`, {
+                const response = await fetch(`https://interview-scheduler-0s3o.onrender.com/api/users/verify-email/${token}`, {
                     method: 'POST', 
                     headers: {
                         'Content-Type': 'application/json',
